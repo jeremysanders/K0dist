@@ -1,0 +1,31 @@
+This is code to model the K0 distribution from Chandra observations of
+a set of clusters from the SPT survey.
+
+See "Hydrostatic Chandra X-ray analysis of SPT-selected galaxy
+clusters - I. Evolution of profiles and core properties" by Sanders et
+al.  (arXiv:1705.09299)
+
+Requirements:
+ python2, scipy, emcee and h5py
+
+The code takes a set of posterior probability distributions taken from
+a MCMC analysis of the individual systems. These are stored in the
+HDF5 format file K0_dist_table_PosOnly.hdf5 (hdfview can be used to
+examine this). The used datasets in the files are Kedges, which
+defines the edges of the K0 bins the posterior distribtion was
+calculated in.  Kbins gives the centres of the bins. likes gives the
+probability density function in each K0-bin for each of the 82
+clusters (the Bullet cluster is not included in this dataset). names
+gives the names of the systems.
+
+The model is a two skewed Gaussians in linear K0 space. Given a
+particular model, we multiply the PDF by the K0 posterior probability
+distribution for each cluster. These combined PDFs are integrated to
+make a likelihood for each system, and combined to give a total
+likelihood. The prior is added to make a final likelihood.
+
+emcee is used to sample the likelihood function producing a chain in
+K0_dist_chain_PosOnly.hdf5.
+
+Finally median and 1-sigma percentile models are produced for the K0
+PDF. These are written into K0_dist_meds_PosOnly.hdf5.
