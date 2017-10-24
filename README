@@ -30,6 +30,10 @@ for the other parameters, logK300 (log entropy at 300 kpc), alphain
 *_bin_centres, *_marg_pdf and *_cuml_marg_pdf data can be found in the
 file.
 
+The marginalised posterior distributions can also be found in the file
+posteriors.txt, giving the cluster name, parameter, bin centre, lower
+bin value, upper bin value, marginalised PDF and cumulative PDF.
+
 The model is a two skewed Gaussians in linear K0 space. Given a
 particular model, we multiply the PDF by the K0 posterior probability
 distribution for each cluster. These combined PDFs are integrated to
