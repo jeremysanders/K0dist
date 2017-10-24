@@ -21,7 +21,8 @@ K0_marg_pdf:      marginalised posterior PDF for each of the 82 clusters
 
 Also included in the file are:
 
-K0_cuml_marg_pdf: cumulative version of K0_marg_pdf for each cluster
+K0_cuml_prob:     cumulative probability for each cluster with
+                  increasing parameter
 cluster_names:    names of included clusters for each row in the PDF
 
 In addition, we provide binned marginalised posterior distributions
@@ -32,7 +33,7 @@ file.
 
 The marginalised posterior distributions can also be found in the file
 posteriors.txt, giving the cluster name, parameter, bin centre, lower
-bin value, upper bin value, marginalised PDF and cumulative PDF.
+bin value, upper bin value, marginalised PDF and cumulative probability.
 
 The model is a two skewed Gaussians in linear K0 space. Given a
 particular model, we multiply the PDF by the K0 posterior probability

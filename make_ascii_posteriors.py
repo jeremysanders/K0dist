@@ -16,12 +16,17 @@ def main():
         cent = inf['%s_bin_centres' % par]
         edges = inf['%s_bin_edges' % par]
         pdf = inf['%s_marg_pdf' % par]
-        cpdf = inf['%s_cuml_marg_pdf' % par]
+        cpdf = inf['%s_cuml_prob' % par]
 
         for iclust, name in enumerate(clusters):
             for c, e1, e2, p, cp in zip(
                     cent, edges[:-1], edges[1:], pdf[iclust,:],
                     cpdf[iclust,:]):
+                print(
+                    '%s & %s & %.4f & %.4f & %.4f & %.4f & %.4f \\\\' % (
+                        name, par, c, e1, e2, p, cp
+                        )
+                )
                 print(
                     '%16s %8s %6.4e %6.4e %6.4e %6.4e %6.4e' % (
                         name, par, c, e1, e2, p, cp
