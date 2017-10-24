@@ -10,7 +10,7 @@ import emcee
 import scipy.optimize
 import scipy.stats
 
-_likes = _Kbins = _Kedges = None
+_pdfs = _Kbins = _Kedges = None
 _bestlike = -N.inf
 
 allowneg = False
@@ -26,16 +26,16 @@ def gaussLogLike(val, mu, sigma):
 
 def like(pars):
     """Calculate log likelihood for model."""
-    global _likes, _Kbins, _Kedges, _bestlike
+    global _pdfs, _Kbins, _Kedges, _bestlike
 
-    if _likes is None:
+    if _pdfs is None:
         # Very ugly code to load the data into global variables, so
         # that we don't have to keep copying the data to the threads.
         filename = 'K0_dist_table_%s.hdf5' % suffix
         with h5py.File(filename, 'r') as f:
-            _likes = N.array(f['likes'])
-            _Kbins = N.array(f['Kbins'])
-            _Kedges = N.array(f['Kedges'])
+            _pdfs = N.array(f['K0_marg_pdf'])
+            _Kbins = N.array(f['K0_bin_centres'])
+            _Kedges = N.array(f['K0_bin_edges'])
 
     mean1, mean2, sigma1, sigma2, skew1, skew2, bal = pars
 
@@ -61,10 +61,10 @@ def like(pars):
     distprob *= 1/N.trapz(distprob, x=_Kbins)
 
     # integrate to compute likelihood for each cluster
-    likes = N.trapz(distprob*_likes, x=_Kbins, axis=1)
+    pdfs = N.trapz(distprob*_pdfs, x=_Kbins, axis=1)
 
     # this is the total
-    sumdistloglike = N.sum(N.log(likes))
+    sumdistloglike = N.sum(N.log(pdfs))
 
     # priors for skew and the parameter
     skewprior = gaussLogLike(skew1,0,20) + gaussLogLike(skew2,0,20)
@@ -140,7 +140,7 @@ def makeK0Dist():
 
     # load 
     with h5py.File('K0_dist_table_%s.hdf5' % suffix, 'r') as f:
-        Kbins = N.array(f['Kbins'])
+        Kbins = N.array(f['K0_bin_centres'])
 
     # sample random set of parameters from the chain
     chain = chain.reshape((-1, chain.shape[-1]))

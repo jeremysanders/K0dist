@@ -6,17 +6,29 @@ clusters - I. Evolution of profiles and core properties" by Sanders et
 al.  (arXiv:1705.09299)
 
 Requirements:
- python2, scipy, emcee and h5py
+ python2, numpy, scipy, emcee and h5py
 
 The code takes a set of posterior probability distributions taken from
 a MCMC analysis of the individual systems. These are stored in the
 HDF5 format file K0_dist_table_PosOnly.hdf5 (hdfview can be used to
-examine this). The used datasets in the files are Kedges, which
-defines the edges of the K0 bins the posterior distribtion was
-calculated in.  Kbins gives the centres of the bins. likes gives the
-probability density function in each K0-bin for each of the 82
-clusters (the Bullet cluster is not included in this dataset). names
-gives the names of the systems.
+examine this). The used datasets in the files are:
+
+K0_bin_edges:     edges of the K0 bins the posterior distribution was
+                  calculated in
+K0_bin_centres:   centres of above bins
+K0_marg_pdf:      marginalised posterior PDF for each of the 82 clusters
+                  (the Bullet cluster is not included in this dataset)
+
+Also included in the file are:
+
+K0_cuml_marg_pdf: cumulative version of K0_marg_pdf for each cluster
+cluster_names:    names of included clusters for each row in the PDF
+
+In addition, we provide binned marginalised posterior distributions
+for the other parameters, logK300 (log entropy at 300 kpc), alphain
+(inner slope) and alphaout (outer slope). Similar *_bin_edges,
+*_bin_centres, *_marg_pdf and *_cuml_marg_pdf data can be found in the
+file.
 
 The model is a two skewed Gaussians in linear K0 space. Given a
 particular model, we multiply the PDF by the K0 posterior probability
