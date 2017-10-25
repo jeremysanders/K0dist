@@ -3,10 +3,20 @@ a set of clusters from the SPT survey.
 
 See "Hydrostatic Chandra X-ray analysis of SPT-selected galaxy
 clusters - I. Evolution of profiles and core properties" by Sanders et
-al.  (arXiv:1705.09299)
+al., 2017, MNRAS (arXiv:1705.09299)
 
 Requirements:
  python2, numpy, scipy, emcee and h5py
+
+Usage:
+ python K0_dist.py
+
+Input:
+ K0_dist_table_PosOnly.hdf5  (input posterior PDFs)
+
+Outputs:
+ K0_dist_chain_PosOnly.hdf5  (output MCMC chain)
+ K0_dist_meds_PosOnly.hdf5   (median K0 distribution and uncertainties)
 
 The code takes a set of posterior probability distributions taken from
 a MCMC analysis of the individual systems. These are stored in the
